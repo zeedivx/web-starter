@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.0
+    hooks:
+      - id: ruff
+        name: ruff (lint)
+        args: [--fix]
+        files: ^apps/api/
+      - id: ruff-format
+        name: ruff (format)
+        files: ^apps/api/
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        files: ^apps/api/
+      - id: end-of-file-fixer
+        files: ^apps/api/
+      - id: check-yaml
+        files: ^apps/api/
+      - id: check-added-large-files
+        files: ^apps/api/
+      - id: check-json
+        files: ^apps/api/
+      - id: check-toml
+        files: ^apps/api/
+      - id: mixed-line-ending
+        files: ^apps/api/
