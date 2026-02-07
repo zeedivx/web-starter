@@ -1,12 +1,15 @@
 """User model."""
 
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models.base import Base
 from src.models.mixins import FullModelMixin
+
+if TYPE_CHECKING:
+    from src.models.session import Session
 
 
 class User(Base, FullModelMixin):
@@ -52,6 +55,13 @@ class User(Base, FullModelMixin):
     last_name: Mapped[str | None] = mapped_column(
         String(100),
         nullable=True,
+    )
+
+    # Relationships
+    sessions: Mapped[list[Session]] = relationship(
+        "Session",
+        back_populates="user",
+        cascade="all, delete-orphan",
     )
 
     @override
