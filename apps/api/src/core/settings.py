@@ -11,6 +11,8 @@ class Settings(BaseSettings):
         case_sensitive=False,
         extra="ignore"
     )
+
+    app_name: str = "Web-Starter API"
     
 @lru_cache
 def get_settings() -> Settings:
