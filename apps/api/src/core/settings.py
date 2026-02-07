@@ -17,6 +17,16 @@ class Settings(BaseSettings):
     env: str = Field(default="development", validation_alias="ENV")
     debug: bool = Field(default=True, validation_alias="DEBUG")
 
+    # Logging
+    log_level: str = Field(default="INFO", validation_alias="LOG_LEVEL")
+    log_file_path: str = Field(default="logs/app.log", validation_alias="LOG_FILE_PATH")
+    log_rotation: str = Field(default="100 MB", validation_alias="LOG_ROTATION")
+    log_retention: str = Field(default="30 days", validation_alias="LOG_RETENTION")
+    log_format: str = Field(
+        default="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+        validation_alias="LOG_FORMAT",
+    )
+
     # Database
     database_url: PostgresDsn = Field(default=..., validation_alias="DATABASE_URL")
 
