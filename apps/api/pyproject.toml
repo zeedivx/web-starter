@@ -25,3 +25,6 @@ dev = [
     "ruff>=0.15.0",
     "ty>=0.0.15",
 ]
+
+[tool.pyright]
+reportImportCycles = "none"
