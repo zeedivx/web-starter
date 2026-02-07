@@ -45,7 +45,7 @@ def create_app() -> FastAPI:
     app.add_middleware(TimingMiddleware)  # type: ignore[arg-type]
     app.add_middleware(LoggingMiddleware)  # type: ignore[arg-type]
 
-    app.include_router(api_router, prefix="/api/v1")
+    app.include_router(api_router, prefix="/v1")
 
     return app
 
