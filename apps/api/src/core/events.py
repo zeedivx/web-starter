@@ -33,17 +33,8 @@ async def startup_event() -> None:
     """Run on application startup."""
     setup_logging()
 
-    # Print banner
     print_banner()
 
-    # Log startup info
-    logger.info("Starting application")
-    logger.info(f"App Name: {settings.app_name}")
-    logger.info(f"Environment: {settings.env}")
-    logger.info(f"Debug Mode: {settings.debug}")
-    logger.info(f"Log Level: {settings.log_level}")
-
-    # Test database connection
     try:
         async with async_engine.connect() as conn:
             _ = await conn.execute(text("SELECT 1"))
