@@ -37,6 +37,15 @@ class Settings(BaseSettings):
         default=30, validation_alias="ACCESS_TOKEN_EXPIRE_MINUTES"
     )
 
+    # Password Hashing
+    password_argon2_time_cost: int = Field(default=2, validation_alias="PASSWORD_ARGON2_TIME_COST")
+    password_argon2_memory_cost: int = Field(
+        default=102400, validation_alias="PASSWORD_ARGON2_MEMORY_COST"
+    )
+    password_argon2_parallelism: int = Field(
+        default=8, validation_alias="PASSWORD_ARGON2_PARALLELISM"
+    )
+
     @property
     def async_database_url(self) -> str:
         """Get async database URL."""

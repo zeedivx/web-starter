@@ -9,6 +9,7 @@ dependencies = [
     "asyncpg>=0.31.0",
     "fastapi>=0.128.4",
     "loguru>=0.7.3",
+    "passlib[argon2]>=1.7.4",
     "psycopg>=3.3.2",
     "psycopg-binary>=3.3.2",
     "pydantic-settings>=2.12.0",
