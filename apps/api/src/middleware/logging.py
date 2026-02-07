@@ -3,7 +3,7 @@
 import time
 from collections.abc import Awaitable, Callable
 from typing import override
-from uuid import uuid7
+from uuid import uuid4
 
 from fastapi import Request, Response
 from loguru import logger
@@ -22,7 +22,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         self, request: Request, call_next: Callable[[Request], Awaitable[Response]]
     ) -> Response:
         """Process request and log details."""
-        request_id = str(uuid7())
+        request_id = str(uuid4())
         request.state.request_id = request_id
 
         logger.info(
