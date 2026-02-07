@@ -22,6 +22,7 @@ ignore = [
     "B008",   # do not perform function calls in argument defaults (FastAPI Depends)
     "ARG001", # unused function argument (common in FastAPI)
     "ARG002", # unused method argument
+    "TC002", # type-checking block not needed for runtime
     "TC003", # move standard library import into type-checking block (not needed for runtime)
 ]
 

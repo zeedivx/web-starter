@@ -1,11 +1,38 @@
 """Logging configuration using loguru."""
 
+import logging
 import sys
 from pathlib import Path
+from typing import override
 
 from loguru import logger
 
 from src.core.settings import settings
+
+
+class InterceptHandler(logging.Handler):
+    """
+    Intercept standard logging messages and redirect to loguru.
+
+    This allows third-party libraries (SQLAlchemy, uvicorn, etc.)
+    to use loguru's formatting.
+    """
+
+    @override
+    def emit(self, record: logging.LogRecord) -> None:
+        """Emit a record using loguru."""
+        try:
+            level = logger.level(record.levelname).name
+        except ValueError:
+            level = record.levelno
+
+        frame = logging.currentframe()
+        depth = 2
+        while frame and frame.f_code.co_filename == logging.__file__:
+            frame = frame.f_back
+            depth += 1
+
+        logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
 def setup_logging() -> None:
@@ -49,6 +76,13 @@ def setup_logging() -> None:
                 compression="zip",
                 serialize=True,
             )
+
+    logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
+
+    for logger_name in ["uvicorn", "uvicorn.access", "uvicorn.error", "sqlalchemy.engine"]:
+        logging_logger = logging.getLogger(logger_name)
+        logging_logger.handlers = [InterceptHandler()]
+        logging_logger.propagate = False
 
     logger.info(f"Logging configured: level={settings.log_level}, env={settings.env}")
 

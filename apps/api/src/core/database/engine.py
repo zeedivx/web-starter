@@ -15,9 +15,9 @@ async_engine = create_async_engine(
     poolclass=NullPool if settings.env == "test" else None,
 )
 
-# Sync engine
+# Sync engine (for Alembic migrations) - uses psycopg (v3)
 engine = create_engine(
-    settings.async_database_url.replace("+asyncpg", ""),
+    settings.async_database_url.replace("+asyncpg", "+psycopg"),
     echo=settings.debug,
     future=True,
     pool_pre_ping=True,
