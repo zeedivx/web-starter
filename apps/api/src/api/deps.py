@@ -1,6 +1,7 @@
 """FastAPI dependencies."""
 
 from collections.abc import AsyncGenerator
+from typing import Annotated
 
 from fastapi import Depends, Request
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -9,7 +10,7 @@ from src.core.database import get_db
 
 
 async def get_db_session(
-    db: AsyncSession = Depends(get_db),
+    db: Annotated[AsyncSession, Depends(get_db)],
 ) -> AsyncGenerator[AsyncSession]:
     """
     Get database session dependency.

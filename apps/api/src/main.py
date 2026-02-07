@@ -55,7 +55,7 @@ def create_app() -> FastAPI:
     app.add_middleware(TimingMiddleware)  # type: ignore[arg-type]
     app.add_middleware(LoggingMiddleware)  # type: ignore[arg-type]
 
-    # Exception handlers (order matters - more specific first)
+    # Exception handlers
     app.add_exception_handler(AppException, app_exception_handler)  # type: ignore[invalid-argument-type]  # pyright: ignore[reportArgumentType]
     app.add_exception_handler(StarletteHTTPException, http_exception_handler)  # type: ignore[invalid-argument-type]  # pyright: ignore[reportArgumentType]
     app.add_exception_handler(RequestValidationError, validation_exception_handler)  # type: ignore[invalid-argument-type]  # pyright: ignore[reportArgumentType]
