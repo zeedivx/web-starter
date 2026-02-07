@@ -1,6 +1,6 @@
 """Base repository for database operations."""
 
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 from uuid import UUID
 
 from sqlalchemy import delete, func, select
@@ -12,8 +12,6 @@ from src.models.base import Base
 if TYPE_CHECKING:
     from sqlalchemy.sql import Select
     from sqlalchemy.sql.elements import UnaryExpression
-
-ModelType = TypeVar("ModelType", bound=Base)
 
 
 class BaseRepository[ModelType: Base]:
