@@ -5,6 +5,7 @@ from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.core.exceptions.database import RecordNotFoundException
 from src.db.repositories.base import BaseRepository
 from src.models.base import Base
 
@@ -47,7 +48,9 @@ class BaseService[ModelType: Base]:
         """Get entity by ID or raise exception."""
         entity = await self.repository.get(id)
         if not entity:
-            raise ValueError(f"Entity with id {id} not found")
+            raise RecordNotFoundException(
+                f"{self.repository.model.__name__} with id {id} not found"
+            )
         return entity
 
     async def get_many(
