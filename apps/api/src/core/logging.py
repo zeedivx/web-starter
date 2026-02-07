@@ -79,9 +79,17 @@ def setup_logging() -> None:
 
     logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
 
-    for logger_name in ["uvicorn", "uvicorn.access", "uvicorn.error", "sqlalchemy.engine"]:
+    loggers_config = {
+        "uvicorn": logging.INFO,
+        "uvicorn.access": logging.INFO,
+        "uvicorn.error": logging.ERROR,
+        "sqlalchemy.engine": logging.WARNING,
+    }
+
+    for logger_name, level in loggers_config.items():
         logging_logger = logging.getLogger(logger_name)
         logging_logger.handlers = [InterceptHandler()]
+        logging_logger.setLevel(level)
         logging_logger.propagate = False
 
     logger.info(f"Logging configured: level={settings.log_level}, env={settings.env}")

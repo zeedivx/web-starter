@@ -9,13 +9,12 @@ from src.core.settings import settings
 # Async engine
 async_engine = create_async_engine(
     settings.async_database_url,
-    echo=settings.debug,
+    echo=False,  # Disable verbose SQL logging
     future=True,
     pool_pre_ping=True,
     poolclass=NullPool if settings.env == "test" else None,
 )
 
-# Sync engine (for Alembic migrations) - uses psycopg (v3)
 engine = create_engine(
     settings.async_database_url.replace("+asyncpg", "+psycopg"),
     echo=settings.debug,
