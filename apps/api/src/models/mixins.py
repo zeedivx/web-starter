@@ -11,11 +11,6 @@ class UUIDMixin:
     """
     Mixin that adds UUID v7 primary key.
 
-    UUID v7 features:
-    - Sortable by creation time
-    - Contains timestamp information
-    - Better for database indexes than UUID v4
-
     Attributes:
         id: UUID v7 primary key (auto-generated)
     """
