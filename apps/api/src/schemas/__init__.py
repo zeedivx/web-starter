@@ -9,6 +9,12 @@ from src.schemas.base import (
     ResponseSchema,
     TimestampSchema,
 )
+from src.schemas.user import (
+    UserCreate,
+    UserInDB,
+    UserResponse,
+    UserUpdate,
+)
 
 __all__ = [
     "BaseModelSchema",
@@ -18,4 +24,8 @@ __all__ = [
     "PaginationParams",
     "ResponseSchema",
     "TimestampSchema",
+    "UserCreate",
+    "UserInDB",
+    "UserResponse",
+    "UserUpdate",
 ]
