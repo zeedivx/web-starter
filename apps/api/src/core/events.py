@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from loguru import logger
 from sqlalchemy import text
 
+from src import __version__
 from src.core.database import async_engine
 from src.core.logging import setup_logging
 from src.core.settings import settings
@@ -13,28 +14,23 @@ from src.core.settings import settings
 
 def print_banner() -> None:
     """Print application banner on startup."""
-    banner = f"""
-╔═══════════════════════════════════════════════════════════════╗
-║                                                               ║
-║   ██╗    ██╗███████╗██████╗       ███████╗████████╗ █████╗   ║
-║   ██║    ██║██╔════╝██╔══██╗      ██╔════╝╚══██╔══╝██╔══██╗  ║
-║   ██║ █╗ ██║█████╗  ██████╔╝█████╗███████╗   ██║   ███████║  ║
-║   ██║███╗██║██╔══╝  ██╔══██╗╚════╝╚════██║   ██║   ██╔══██║  ║
-║   ╚███╔███╔╝███████╗██████╔╝      ███████║   ██║   ██║  ██║  ║
-║    ╚══╝╚══╝ ╚══════╝╚═════╝       ╚══════╝   ╚═╝   ╚═╝  ╚═╝  ║
-║                                                               ║
-║                     {settings.app_name:<43} ║
-║                     Version: 0.1.0                            ║
-║                     Environment: {settings.env:<32} ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-"""
-    print(banner)
+    separator = "═" * 67
+    logger.info(separator)
+    logger.info(f"  {settings.app_name.upper():^63}")
+    logger.info(separator)
+    logger.info(f"  Version      │  {__version__}")
+    logger.info(f"  Environment  │  {settings.env}")
+    logger.info(f"  Debug Mode   │  {'✓ enabled' if settings.debug else '✗ disabled'}")
+    logger.info(f"  Log Level    │  {settings.log_level}")
+    logger.info(separator)
+    if settings.debug:
+        logger.info("  Docs         │  http://localhost:8000/docs")
+        logger.info("  Health       │  http://localhost:8000/v1/health")
+        logger.info(separator)
 
 
 async def startup_event() -> None:
     """Run on application startup."""
-    # Setup logging first
     setup_logging()
 
     # Print banner
